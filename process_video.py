@@ -6,8 +6,6 @@ import numpy as np
 from plot_yolo import PlotYolo
 import pickle
 from rl_agent import TrajectoryOracleRLAgent
-import tkinter as tk
-from tkinter import filedialog, messagebox
 
 def process_video(video_filepath, output_dir='./output_frames', distance_threshold=50, prediction_frames=20):
     if not os.path.exists(output_dir):
@@ -172,32 +170,3 @@ def generate_trajectory_map(all_positions, output_dir, width, height):
         plt.savefig(os.path.join(output_dir, "trajectory_map.png"))
         plt.show()
 
-
-def select_video():
-    video_filepath = filedialog.askopenfilename(title="Select Video", filetypes=[("Video Files", "*.mp4 *.avi *.mov *.mkv")])
-    if video_filepath:
-        output_dir = os.path.join('./output_frames', os.path.splitext(os.path.basename(video_filepath))[0])
-        distance_threshold = int(distance_threshold_entry.get())
-        prediction_frames = int(prediction_frames_entry.get())
-        process_video(video_filepath, output_dir, distance_threshold, prediction_frames)
-    else:
-        messagebox.showwarning("No File Selected", "Please select a video file.")
-
-# GUI Setup
-root = tk.Tk()
-root.title("Trajectory Oracle")
-
-tk.Label(root, text="Distance Threshold:").grid(row=0, column=0, padx=10, pady=10)
-distance_threshold_entry = tk.Entry(root)
-distance_threshold_entry.insert(0, "50")
-distance_threshold_entry.grid(row=0, column=1, padx=10, pady=10)
-
-tk.Label(root, text="Prediction Frames:").grid(row=1, column=0, padx=10, pady=10)
-prediction_frames_entry = tk.Entry(root)
-prediction_frames_entry.insert(0, "20")
-prediction_frames_entry.grid(row=1, column=1, padx=10, pady=10)
-
-select_video_button = tk.Button(root, text="Select Video", command=select_video)
-select_video_button.grid(row=2, column=0, columnspan=2, pady=20)
-
-root.mainloop()
