@@ -1,6 +1,5 @@
 import os
-import cv2
-from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask import Flask, request, jsonify, send_from_directory
 from process_video import process_video  # Import your process_video function
 
 UPLOAD_FOLDER = './uploaded_videos'
@@ -44,6 +43,4 @@ def upload_video():
 def serve_output(filename):
     return send_from_directory(OUTPUT_FOLDER, filename)
 
-# Main
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+# Vercel looks for this `app` instance, so don't use `if __name__ == '__main__'`
