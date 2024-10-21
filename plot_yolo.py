@@ -9,7 +9,8 @@ from rl_agent import TrajectoryOracleRLAgent
 
 class PlotYolo:
     def __init__(self, video_filepath, distance_threshold=50):
-        self.yolo = YOLO("yolov8s.pt").to("cuda")
+        device = "cude" if torch.cuda.is_available() else "cpu"
+        self.yolo = YOLO("yolov8s.pt").to(device)
         self.video_filepath = video_filepath
         self.video_capture = cv2.VideoCapture(self.video_filepath)
         self.objects_last_frame = []
